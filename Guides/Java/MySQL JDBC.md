@@ -1,6 +1,6 @@
-#Deploying a Java application with MySQLs addon
+#Deploying a Java application with MySQLs Add-on
 
-In this tutorial we're going to show you how to deploy a web application (run on embedded Jetty) integrated with MySQL via JDBC on [cloudControl](https://www.cloudcontrol.com/). MySQL database instance will be provided via [MySQLs Add-on](https://www.cloudcontrol.com/dev-center/Add-on%20Documentation/Data%20Storage/MySQLs). You can find the [source code on Github](https://github.com/cloudControl/java-mysql-example-app). Check out the [buildpack-java](https://github.com/cloudControl/buildpack-java) for supported features.
+In this tutorial we're going to show you how to deploy a web application (running on embedded Jetty) integrated with MySQL via JDBC on [cloudControl](https://www.cloudcontrol.com/). MySQL database instance will be provided via [MySQLs Add-on](https://www.cloudcontrol.com/dev-center/Add-on%20Documentation/Data%20Storage/MySQLs). You can find the [source code on Github](https://github.com/cloudControl/java-mysql-example-app). Check out the [buildpack-java](https://github.com/cloudControl/buildpack-java) for supported features.
 
 ##Prerequisites
  * [cloudControl user account with billing](https://github.com/cloudControl/documentation/blob/master/Platform%20Documentation.md#user-accounts)
@@ -9,10 +9,9 @@ In this tutorial we're going to show you how to deploy a web application (run on
  * [J2SE JDK/JVM](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
  * [Maven3](http://maven.apache.org/download.html)
 
-##Creating an application:
+##Create the application
 
-Create application using maven:
-
+Create the application using maven:
 ~~~bash
 mvn archetype:generate \
     -DarchetypeGroupId=org.apache.maven.archetypes \
@@ -20,9 +19,8 @@ mvn archetype:generate \
     -DartifactId=APP_NAME
 ~~~
 
-Accept all default options proposed by maven. This should create given project structure:
-
-~~~bash
+Accept all default options proposed by maven. This should create the following project structure:
+~~~
 PROJECTDIR
 ├── pom.xml
 └── src
@@ -48,12 +46,13 @@ If you want to develop given example in [Eclipse IDE](http://www.eclipse.org/dow
 cd PROJECTDIR ; mvn eclipse:eclipse
 ~~~
 
-This will create Eclipse project files. Right now you can proceed using Eclipse.
+This will create Eclipse project files. Now you can proceed using Eclipse.
 
-###Extending pom.xml with missing dependencies and build plugins:
+###Extending pom.xml with missing dependencies and build plugins
 
-You have to specify maven dependencies to include Jetty server, Servlet library and JDBC MySQL driver. Add build plugins: [maven dependency plugin](http://maven.apache.org/plugins/maven-dependency-plugin/) and [maven compiler plugin](http://maven.apache.org/plugins/maven-compiler-plugin/).
+You have to specify maven dependencies to include: Jetty server, Servlet library and JDBC MySQL driver. Add build plugins: [maven dependency plugin](http://maven.apache.org/plugins/maven-dependency-plugin/) and [maven compiler plugin](http://maven.apache.org/plugins/maven-compiler-plugin/).
 
+The `pom.xml` should now look like this:
 ~~~xml
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -113,10 +112,11 @@ You have to specify maven dependencies to include Jetty server, Servlet library 
 </project>
 ~~~
 
-###Write your web application:
+###Implementation
 
-The application will provide HTTP API to write and read message from database. MySQL database credentials are provided by MySQLs Add-on and are accessible via environment variables:
+The application will provide HTTP API to write and read message from database. MySQL database credentials are provided by MySQLs Add-on and are accessible via environment variables.
 
+Here's the source code for `App.java`:
 ~~~java
 package com.cloudcontrolled.sample.mysql;
 
@@ -210,14 +210,15 @@ public class App {
 }
 ~~~
 
-###Defining the process type
-CloudControl uses a `Procfile` to know how to start your process. Create a file called Procfile:
+###Define the process type
+CloudControl uses a `Procfile` to know how to start your process.
 
+Create a file called `Procfile` with the following content:
 ~~~
 web:    java -cp target/classes:target/dependency/* com.cloudcontrolled.sample.mysql.App
 ~~~
 
-###Initializing git repository
+###Initialize git repository
 Initialize a new git repository in the project directory and commit the files you have just created.
 
 ~~~bash
@@ -226,15 +227,13 @@ $ git add pom.xml Procfile src
 $ git commit -am "Initial commit"
 ~~~
 
-##Pushing, creating MySQL addon and deploying your app
+##Deploy the app
 Choose a unique name (from now on called APP_NAME) for your application and create it on the cloudControl platform:
-
 ~~~bash
 $ cctrlapp APP_NAME create java
 ~~~
 
-Push your code to the application's repository:
-
+Push the code to the application's repository:
 ~~~bash
 $ cctrlapp APP_NAME/default push
 
@@ -262,7 +261,7 @@ To ssh://APP_NAME@cloudcontrolled.com/repository.git
    bd556b1..d7b04b5  master -> master
 ~~~
 
-Create MySQLs addon:
+Create MySQLs Add-on:
 
 ~~~bash
 $ cctrlapp APP_NAME/default addon.add mysqls.PLAN
@@ -274,7 +273,7 @@ Deploy your app:
 $ cctrlapp APP_NAME/default deploy
 ~~~
 
-**Congratulations, you can now test your application:**
+**Congratulations, you can now test the application:**
 
 ~~~bash
 $ curl APP_NAME.cloudcontrolled.com/read
