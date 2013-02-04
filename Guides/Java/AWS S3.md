@@ -4,8 +4,7 @@
 
 ## Amazon S3 SDK
 
-There is a number of SDK solutions for Amazon S3, with official one on top of them:
-
+There are a few java SDKs for Amazon S3, the first being the official one:
 * [Amazon S3 Java SDK](http://aws.amazon.com/sdkforjava/)
 * [JetS3t](http://jets3t.s3.amazonaws.com/index.html)
 * [s3lib](http://code.google.com/p/s3lib/)
@@ -23,18 +22,18 @@ To use the official Amazon S3 SDK in your project just specify additional maven 
 </dependency>
 ~~~
 
-Follow also [Amazon Guide](http://docs.aws.amazon.com/AWSSdkDocsJava/latest/DeveloperGuide/java-dg-setup.html) how to setup an account and get [AWS access credentials](http://aws.amazon.com/security-credentials).
+Follow the [Amazon Guide](http://docs.aws.amazon.com/AWSSdkDocsJava/latest/DeveloperGuide/java-dg-setup.html) to setup an account and get the [AWS access credentials](http://aws.amazon.com/security-credentials).
 
 ## Example usage:
 
-To make it working create AWS account and provide your credentials in properties file:
+First create an AWS account and provide your credentials in properties file:
 
 ~~~java
 accessKey=
 secretKey=
 ~~~
 
-Make some operations on buckets and objects:
+Now try out some operations on buckets and objects:
 
 ~~~java
 // S3 client connection
@@ -65,8 +64,7 @@ s3.deleteObject(BUCKET, KEY);
 s3.deleteBucket(new DeleteBucketRequest(BUCKET));
 ~~~
 
-Helper function to read the content of the S3 object:
-
+Here is a simple helper function that can be used to read the content of the S3 object:
 ~~~java
 private static String getContent(S3ObjectInputStream fin) throws IOException {
     int ch;
