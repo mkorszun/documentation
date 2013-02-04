@@ -147,10 +147,7 @@ To ssh://APP_NAME@cloudcontrolled.com/repository.git
  * [new branch]      master -> master
 ~~~
 
-Create MySQLs Add-on:
-
-You need the [MySQLs Add-on](https://www.cloudcontrol.com/dev-center/Add-on%20Documentation/Data%20Storage/MySQLs) to  use MySQL for your deployment. Check out the marketplace for [availalbe plan](https://www.cloudcontrol.com/add-ons/mysqls) and then add the Add-on:
-
+You need the [MySQLs Add-on](https://www.cloudcontrol.com/dev-center/Add-on%20Documentation/Data%20Storage/MySQLs) to  use MySQL for your deployment. Check out the marketplace for [availalbe plans](https://www.cloudcontrol.com/add-ons/mysqls) and then add the Add-on:
 ~~~bash
 $ cctrlapp APP_NAME/default addon.add mysqls.PLAN
 ~~~
