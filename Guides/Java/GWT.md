@@ -1,6 +1,6 @@
 #Deploying a Google Web Toolkit on embedded Jetty
 
-Google Web Toolkit (GWT) is a development toolkit for building and optimizing complex browser-based applications. GWT is used by many products at Google, including Google AdWords and Orkut. It's open source, completely free, and used by thousands of developers around the world.
+[Google Web Toolkit (GWT)](https://developers.google.com/web-toolkit/) is a development toolkit for building and optimizing complex browser-based applications. GWT is used by many products at Google, including Google AdWords and Orkut. It's open source, completely free, and used by thousands of developers around the world.
 
 In this tutorial we're going to show you how to create example GWT application, deploy it on embedded Jetty server and run on [cloudControl](https://www.cloudcontrol.com/). You can find the [source code on Github](https://github.com/cloudControl/java-gwt-example-app). Check out the [buildpack-java](https://github.com/cloudControl/buildpack-java) for supported features.
 
@@ -16,11 +16,11 @@ In this tutorial we're going to show you how to create example GWT application, 
 
 Use `webAppCreator` provided with GWT SDK to create example application:
 
-~~~ bash
+~~~bash
 webAppCreator -maven -noant -out java-gwt-example-app com.cloudcontrolled.sample.gwt.GreetingEntry
 ~~~
 
-~~~bash
+~~~
 PROJECTDIR
 ├── pom.xml
 └── src
@@ -94,8 +94,9 @@ For a fast and easy way to run your app, without having to install and administe
 ~~~
 
 ###Defining the process type
-CloudControl uses a `Procfile` to know how to start your process. Create a file called Procfile:
+CloudControl uses a `Procfile` to know how to start your process.
 
+Create a file called `Procfile` with the following content:
 ~~~
 web: java $JAVA_OPTS -jar target/dependency/jetty-runner.jar --port $PORT target/*.war
 ~~~
