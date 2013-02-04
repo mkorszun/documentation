@@ -45,6 +45,10 @@ You should have below project structure:
                 └── rocket.png
 ~~~
 
+### Prepare for deployment
+
+Extend project for each Application server separately.
+
 #### Jetty specific
 
 Extend build plugins in `pom.xml` - provide Jetty runner:
@@ -118,7 +122,7 @@ Extend dependencies in `pom.xml` - provide embedded Glassfish artifact:
 </dependency>
 ~~~
 
-Implement embedded Glassfish runner:
+Implement embedded Glassfish runner - `src/main/java/com/cloudcontrolled/sample/spring/GlassfishRunner`:
 
 ~~~java
 package com.cloudcontrolled.sample.spring;
@@ -179,6 +183,8 @@ public class GlassfishRunner {
 ~~~
 
 ###Defining the process type
+
+Create a Procfile in project root directory and add the following line:
 
 ####Jetty:
 
