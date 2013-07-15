@@ -6,26 +6,24 @@ In this tutorial we're going to show you how to deploy a Hello World Flask
 application on [cloudControl]. Check out the [Python buildpack] for
 supported features.
 
-## Cloning a Hello World application
-First, clone the hello world app from our repository:
+## The Flask App Explained
+First, lets clone the example code from Github:
 
 ~~~bash
 $ git clone git://github.com/cloudControl/python-flask-example-app.git
 $ cd python-flask-example-app
 ~~~
 
-### Dependency declaration with pip
-Pip requirements are read from `requirements.txt` in your project's root directory.
-For this simple app the only requirement is Flask itself:
+The code from the example repository is ready to be deployed. Lets still go through the different files and their purpose real quick.
+
+### Dependency Tracking
+The [Python buildpack] tracks dependencies via pip and the `requirements.txt` file. It needs to be placed in the root directory of your repository. The example app specifies only Flask itself as a dependency. The one you cloned as part of the example app looks like this:
 
 ~~~pip
 Flask==0.9
 ~~~
 
-You should always specify the versions of your dependencies, if you want your builds to
-be reproducable and to prevent unexpected errors caused by version changes.
-
-### Process type definitions
+### Process Type Definition
 cloudControl uses a [Procfile] to know how to start your processes.
 
 There must be a file called `Procfile` at the top level of your repository, with the following content:
@@ -36,14 +34,32 @@ web: python server.py
 
 The web process type is required and specifies the command that will be executed when the app is deployed.
 
-## Pushing and deploying your app
-Choose a unique name (from now on called APP_NAME) for your application and create it on the cloudControl platform:
+### The Actual Application Code
+
+The actual application code is really straight forward. It provides one handler which serves static html file.
+
+~~~python
+import os
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello():
+    return render_template('hello.html')
+
+app.debug = True
+app.run(host='0.0.0.0', port=int(os.environ['PORT']))
+~~~
+
+## Pushing and deploying the App
+Choose a unique name to replace the `APP_NAME` placeholder for your application and create it on the cloudControl platform:
 
 ~~~bash
 $ cctrlapp APP_NAME create python
 ~~~
 
-Push your code to the application's repository, which creates a deployment image:
+Push your code to the application's repository, which triggers the deployment image build process:
 
 ~~~bash
 $ cctrlapp APP_NAME/default push
@@ -73,13 +89,13 @@ $ cctrlapp APP_NAME/default push
     460bdac..28dd4d5  master -> master
 ~~~
 
-Deploy your app:
+Last but not least deploy the latest version of the app with the cctrlapp deploy command.
 
 ~~~bash
 $ cctrlapp APP_NAME/default deploy 
 ~~~
 
-Congratulations, you should now be able to reach your application at `http://APP_NAME.cloudcontrolled.com`.
+Congratulations, you can now see your Flask app running at `http://APP_NAME.cloudcontrolled.com`.
 
 [Flask]: http://flask.pocoo.org/
 [cloudControl]: http://www.cloudcontrol.com
